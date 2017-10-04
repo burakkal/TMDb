@@ -12,6 +12,7 @@ interface TvShowsContract {
     }
 
     interface Presenter {
-
+        void loadPopularTvShows();
+        void unsubscribe();
     }
 }
