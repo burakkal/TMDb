@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.burakkal.tmdb.TvShowsActivity">
+    tools:context="com.burakkal.tmdb.ui.tvshows.TvShowsActivity">
 
 </android.support.constraint.ConstraintLayout>

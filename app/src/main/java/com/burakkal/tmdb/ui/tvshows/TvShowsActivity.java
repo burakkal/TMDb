@@ -1,9 +1,11 @@
-package com.burakkal.tmdb;
+package com.burakkal.tmdb.ui.tvshows;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TvShowsActivity extends AppCompatActivity {
+import com.burakkal.tmdb.R;
+
+public class TvShowsActivity extends AppCompatActivity implements TvShowsContract.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
