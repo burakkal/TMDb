@@ -15,7 +15,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by Burak on 4.10.2017.
@@ -49,24 +48,24 @@ public class TvShowsPresenter implements TvShowsContract.Presenter {
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        Timber.d("Subscribed!");
+                        mView.showLoading();
                     }
                 })
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
-                        Timber.d("Job Completed!");
+                        mView.hideLoading();
                     }
                 })
                 .subscribeWith(new DisposableSingleObserver<List<TvShow>>() {
                     @Override
                     public void onSuccess(@NonNull List<TvShow> tvShows) {
-                        Timber.d("Most popular tv show is " + tvShows.get(0).getName());
+                        mView.showPopularTvShows(tvShows);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Timber.d(e.getMessage());
+                        mView.showErrorMessage(e.getMessage());
                     }
                 });
 
