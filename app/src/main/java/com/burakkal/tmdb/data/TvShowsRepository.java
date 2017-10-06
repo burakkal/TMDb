@@ -1,15 +1,10 @@
 package com.burakkal.tmdb.data;
 
 import com.burakkal.tmdb.data.model.TvShowResponse;
-import com.burakkal.tmdb.data.remote.HttpClient;
+import com.burakkal.tmdb.di.modules.HttpClientModule;
 import com.burakkal.tmdb.data.remote.TvShowsRestService;
 
-import org.reactivestreams.Publisher;
-
-import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 /**
  * Created by Burak on 4.10.2017.
@@ -26,6 +21,6 @@ public class TvShowsRepository implements TvShowsDataSource {
 
     @Override
     public Single<TvShowResponse> getPopularTvShows() {
-        return mService.getPopularTvShows(HttpClient.TMDB_API_KEY);
+        return mService.getPopularTvShows(HttpClientModule.TMDB_API_KEY);
     }
 }

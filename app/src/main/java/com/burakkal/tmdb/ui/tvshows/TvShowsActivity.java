@@ -9,14 +9,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.burakkal.tmdb.R;
+import com.burakkal.tmdb.TmdbApplication;
 import com.burakkal.tmdb.data.TvShowsRepository;
 import com.burakkal.tmdb.data.model.TvShow;
-import com.burakkal.tmdb.data.remote.HttpClient;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TvShowsActivity extends AppCompatActivity implements TvShowsContract.View {
 
@@ -32,6 +35,9 @@ public class TvShowsActivity extends AppCompatActivity implements TvShowsContrac
     private TvShowsPresenter mPresenter;
     private TvShowsAdapter mTvShowsAdapter;
 
+    @Inject
+    TvShowsRepository mRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +45,15 @@ public class TvShowsActivity extends AppCompatActivity implements TvShowsContrac
 
         ButterKnife.bind(this);
 
+        TmdbApplication.get(this).getComponent().inject(this);
+
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerTvShows.setLayoutManager(layoutManager);
         mTvShowsAdapter = new TvShowsAdapter(null);
         mRecyclerTvShows.setAdapter(mTvShowsAdapter);
 
-        TvShowsRepository repository = new TvShowsRepository(
-                HttpClient.provideTvShowsRestService());
-        mPresenter = new TvShowsPresenter(this, repository);
+        mPresenter = new TvShowsPresenter(this, mRepository, AndroidSchedulers.mainThread());
         mPresenter.loadPopularTvShows();
     }
 

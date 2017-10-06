@@ -9,7 +9,7 @@ import java.util.List;
  * burakkal54@gmail.com
  */
 
-interface TvShowsContract {
+public interface TvShowsContract {
 
     interface View {
         void showLoading();

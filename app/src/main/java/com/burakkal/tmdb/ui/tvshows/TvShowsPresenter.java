@@ -6,7 +6,7 @@ import com.burakkal.tmdb.data.model.TvShowResponse;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Scheduler;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -25,20 +25,22 @@ public class TvShowsPresenter implements TvShowsContract.Presenter {
 
     private TvShowsContract.View mView;
     private TvShowsRepository mRepository;
+    private Scheduler mMainScheduler;
     private CompositeDisposable mCompositeDisposable;
 
-    public TvShowsPresenter(TvShowsContract.View view, TvShowsRepository repository) {
+    public TvShowsPresenter(TvShowsContract.View view, TvShowsRepository repository,
+                            Scheduler mainScheduler) {
         mView = view;
         mRepository = repository;
+        mMainScheduler = mainScheduler;
         mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void loadPopularTvShows() {
-        Disposable disposable = mRepository
-                .getPopularTvShows()
+        Disposable disposable = mRepository.getPopularTvShows()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mMainScheduler)
                 .map(new Function<TvShowResponse, List<TvShow>>() {
                     @Override
                     public List<TvShow> apply(@NonNull TvShowResponse tvShowResponse) throws Exception {

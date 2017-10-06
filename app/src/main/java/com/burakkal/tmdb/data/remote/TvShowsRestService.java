@@ -1,6 +1,7 @@
 package com.burakkal.tmdb.data.remote;
 
 import com.burakkal.tmdb.data.model.TvShowResponse;
+import com.burakkal.tmdb.di.modules.HttpClientModule;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -13,6 +14,6 @@ import retrofit2.http.Query;
 
 public interface TvShowsRestService {
 
-    @GET(HttpClient.POPULAR_TV_SHOWS)
+    @GET(HttpClientModule.POPULAR_TV_SHOWS)
     Single<TvShowResponse> getPopularTvShows(@Query("api_key") String apiKey);
 }
