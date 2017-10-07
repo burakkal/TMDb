@@ -1,13 +1,17 @@
 package com.burakkal.tmdb.ui.tvshows;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.burakkal.tmdb.R;
 import com.burakkal.tmdb.data.model.TvShow;
+import com.burakkal.tmdb.di.modules.HttpClientModule;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,9 +25,11 @@ import butterknife.ButterKnife;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsViewHolder> {
 
+    private Context context;
     private List<TvShow> tvShows;
 
-    public TvShowsAdapter(List<TvShow> tvShows) {
+    public TvShowsAdapter(Context context, List<TvShow> tvShows) {
+        this.context = context;
         this.tvShows = tvShows;
     }
 
@@ -40,6 +46,11 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
 
         holder.tvName.setText(tvShow.getName());
         holder.tvOverview.setText(tvShow.getOverview());
+        holder.tvVoteAverage.setText(String.valueOf(tvShow.getVote_average()));
+
+        Picasso.with(context)
+                .load(HttpClientModule.API_IMAGE_URL + tvShow.getPoster_path())
+                .into(holder.imgPoster);
     }
 
     @Override
@@ -60,6 +71,12 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
 
         @BindView(R.id.tv_overview)
         TextView tvOverview;
+
+        @BindView(R.id.img_poster)
+        ImageView imgPoster;
+
+        @BindView(R.id.tv_vote_average)
+        TextView tvVoteAverage;
 
         public TvShowsViewHolder(View view) {
             super(view);

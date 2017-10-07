@@ -50,7 +50,7 @@ public class TvShowsActivity extends AppCompatActivity implements TvShowsContrac
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerTvShows.setLayoutManager(layoutManager);
-        mTvShowsAdapter = new TvShowsAdapter(null);
+        mTvShowsAdapter = new TvShowsAdapter(this, null);
         mRecyclerTvShows.setAdapter(mTvShowsAdapter);
 
         mPresenter = new TvShowsPresenter(this, mRepository, AndroidSchedulers.mainThread());
