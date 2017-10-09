@@ -15,6 +15,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by Burak on 4.10.2017.
@@ -63,6 +64,44 @@ public class TvShowsPresenter implements TvShowsContract.Presenter {
                     @Override
                     public void onSuccess(@NonNull List<TvShow> tvShows) {
                         mView.showPopularTvShows(tvShows);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.showErrorMessage(e.getMessage());
+                    }
+                });
+
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void loadTopRatedTvShows() {
+        Disposable disposable = mRepository.getTopRatedTvShows()
+                .subscribeOn(Schedulers.io())
+                .observeOn(mMainScheduler)
+                .map(new Function<TvShowResponse, List<TvShow>>() {
+                    @Override
+                    public List<TvShow> apply(@NonNull TvShowResponse tvShowResponse) throws Exception {
+                        return tvShowResponse.getResults();
+                    }
+                })
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mView.hideLoading();
+                    }
+                })
+                .subscribeWith(new DisposableSingleObserver<List<TvShow>>() {
+                    @Override
+                    public void onSuccess(@NonNull List<TvShow> tvShows) {
+                        mView.showTopRatedTvShows(tvShows);
                     }
 
                     @Override

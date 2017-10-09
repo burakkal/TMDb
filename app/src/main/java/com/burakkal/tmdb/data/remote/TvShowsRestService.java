@@ -16,4 +16,7 @@ public interface TvShowsRestService {
 
     @GET(HttpClientModule.POPULAR_TV_SHOWS)
     Single<TvShowResponse> getPopularTvShows(@Query("api_key") String apiKey);
+
+    @GET(HttpClientModule.TOP_RATED_TV_SHOWS)
+    Single<TvShowResponse> getTopRatedTvShows(@Query("api_key") String apiKey);
 }

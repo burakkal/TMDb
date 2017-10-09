@@ -18,11 +18,15 @@ public interface TvShowsContract {
 
         void showPopularTvShows(List<TvShow> tvShows);
 
+        void showTopRatedTvShows(List<TvShow> tvShows);
+
         void showErrorMessage(String message);
     }
 
     interface Presenter {
         void loadPopularTvShows();
+
+        void loadTopRatedTvShows();
 
         void unsubscribe();
     }

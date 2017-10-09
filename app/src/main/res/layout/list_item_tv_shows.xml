@@ -38,7 +38,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_height="wrap_content"
-        android:maxLines="2"
+        android:maxLines="3"
         android:ellipsize="end"
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -74,8 +74,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_vote"
         app:layout_constraintTop_toTopOf="@+id/img_vote"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="8.2" />
-
 
 </android.support.constraint.ConstraintLayout>

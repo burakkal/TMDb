@@ -12,4 +12,6 @@ import io.reactivex.Single;
 public interface TvShowsDataSource {
 
     Single<TvShowResponse> getPopularTvShows();
+
+    Single<TvShowResponse> getTopRatedTvShows();
 }

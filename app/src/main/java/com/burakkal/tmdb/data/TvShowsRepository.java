@@ -23,4 +23,9 @@ public class TvShowsRepository implements TvShowsDataSource {
     public Single<TvShowResponse> getPopularTvShows() {
         return mService.getPopularTvShows(HttpClientModule.TMDB_API_KEY);
     }
+
+    @Override
+    public Single<TvShowResponse> getTopRatedTvShows() {
+        return mService.getTopRatedTvShows(HttpClientModule.TMDB_API_KEY);
+    }
 }
